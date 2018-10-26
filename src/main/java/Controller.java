@@ -8,33 +8,33 @@ public class Controller extends KeyAdapter {
 
     private View view;
     private Model model;
-    public boolean startGame=false;
+    public boolean startGame = false;
 
     public Controller(Model model) {
-        View view =new View(this);
+        View view = new View(this);
         view.addKeyListener(this);
         this.view = view;
         this.model = model;
         view.repaint();
     }
 
-    public View getView(){
+    public View getView() {
         return this.view;
     }
 
-    public int getX(){
+    public int getX() {
         return model.getX();
     }
 
-    public int getY(){
+    public int getY() {
         return model.getY();
     }
 
-    public boolean[] getLeftSpikes(){
+    public boolean[] getLeftSpikes() {
         return model.getLeftSpikes();
     }
 
-    public boolean[] getRightSpikes(){
+    public boolean[] getRightSpikes() {
         return model.getRightSpikes();
     }
 
@@ -46,7 +46,7 @@ public class Controller extends KeyAdapter {
         return startGame;
     }
 
-    public boolean isWin(){
+    public boolean isWin() {
         return model.isWin();
     }
 
@@ -67,29 +67,27 @@ public class Controller extends KeyAdapter {
     }
 
 
-
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            if(!model.isGameGoing()){
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (!model.isGameGoing()) {
                 try { //Это фикс бага, чтобы не создалось 2 нити с игрой, когда первая игра не завершилась
                     model.getGameThread().join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }    //
-                startGame=true;
+                startGame = true;
                 model.start();
                 model.jump();
-            }
-            else {
+            } else {
                 model.jump();
             }
         }
     }
 
-    public void paintGraphic(){
-        Thread thread = new Thread( ()-> {
-            while(true){
+    public void paintGraphic() {
+        Thread thread = new Thread(() -> {
+            while (true) {
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
@@ -97,12 +95,12 @@ public class Controller extends KeyAdapter {
                 }
                 view.repaint();
             }
-        } );
+        });
         thread.setDaemon(true);
         thread.start();
     }
 
-    public void startGame(){
+    public void startGame() {
         this.paintGraphic();
     }
 

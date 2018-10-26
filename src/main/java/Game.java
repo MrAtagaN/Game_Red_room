@@ -8,10 +8,8 @@ import java.awt.*;
  */
 public class Game  {
     public static void main(String[] args) {
-
         Model model = new Model();
         Controller controller = new Controller(model);
-
 
         JFrame jFrame = new JFrame();
 
@@ -24,8 +22,6 @@ public class Game  {
         jFrame.add(controller.getView());
 
         controller.startGame();
-
-
     }
 
 }
